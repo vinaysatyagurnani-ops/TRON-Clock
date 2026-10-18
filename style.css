@@ -39,6 +39,8 @@ body {
   text-align: center;
   white-space: nowrap;
   font-variant-numeric: tabular-nums;
+  /* Dims the digits and their glow together. 1 = full ENCOM brightness. */
+  filter: brightness(0.75);
   text-shadow:
     0 0 2px #fff,
     0 0 8px var(--tron-glow),
