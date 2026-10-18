@@ -1,11 +1,11 @@
 :root {
   --bg: #000;
-  --tron: #9fffff;
-  --tron-dim: rgba(159, 255, 255, 0.6);
-  --tron-glow: rgba(159, 255, 255, 0.55);
-  --tron-haze: rgba(159, 255, 255, 0.22);
-  /* Michroma is the closest free match to the Eurostile Extended face on the ENCOM boardroom screens. */
-  --font-encom: "Michroma", "Eurostile", "Bank Gothic", "Share Tech Mono", "Courier New", monospace;
+  /* ENCOM screen light: near-white core, blue-white bloom, as on the boardroom table. */
+  --tron: #e4f6ff;
+  --tron-glow: rgba(130, 205, 255, 0.7);
+  --tron-haze: rgba(90, 170, 255, 0.35);
+  /* Michroma is the closest free match to the Eurostile Extended face on the ENCOM screens. */
+  --font-encom: "Michroma", "Eurostile", "Bank Gothic", "Courier New", monospace;
 }
 
 html,
@@ -22,42 +22,20 @@ body {
   align-items: center;
   color: var(--tron);
   font-family: var(--font-encom);
-  text-transform: uppercase;
   cursor: none;
   -webkit-user-select: none;
   user-select: none;
 }
 
-/* Double outline, like the panels on the boardroom table. */
-.panel {
-  position: relative;
-  width: min(92vw, 1800px);
-  border: 1px solid var(--tron);
-  outline: 1px solid var(--tron-dim);
-  outline-offset: 5px;
-  padding: clamp(1.2rem, 3vw, 3rem) clamp(1rem, 3vw, 3rem) clamp(1.6rem, 4vw, 4rem);
-  box-shadow: 0 0 12px var(--tron-haze), inset 0 0 12px var(--tron-haze);
-}
-
-.panel-head {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-  font-size: clamp(0.5rem, 0.9vw, 0.9rem);
-  letter-spacing: 0.22em;
-  color: var(--tron-dim);
-  margin-bottom: clamp(1rem, 2.5vw, 2.5rem);
-  text-shadow: 0 0 6px var(--tron-haze);
-}
-
 .timestamp {
-  font-size: clamp(0.9rem, 4.1vw, 9rem);
+  font-size: clamp(0.9rem, 4.9vw, 11rem);
   letter-spacing: 0.06em;
   text-align: center;
   white-space: nowrap;
   font-variant-numeric: tabular-nums;
   text-shadow:
-    0 0 6px var(--tron-glow),
-    0 0 18px var(--tron-glow),
-    0 0 40px var(--tron-haze);
+    0 0 2px #fff,
+    0 0 8px var(--tron-glow),
+    0 0 22px var(--tron-glow),
+    0 0 60px var(--tron-haze);
 }
