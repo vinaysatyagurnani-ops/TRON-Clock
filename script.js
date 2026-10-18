@@ -17,24 +17,76 @@ function formatTronTime(now) {
   return `${month}:${day}:${year}:${weekday}:${hour}:${minute}:${second}:${centisecond}`;
 }
 
-function startClock() {
-  const element = document.querySelector(".timestamp");
-  if (!element) return;
+// Two states: "clock" (live timestamp) and "password" (the digits scramble into PASSWORD:).
+// The macOS screensaver flips the state from native code; in a browser any key flips it and Esc flips back.
+function createTron(element) {
+  const SCRAMBLE = "0123456789ABCDEF:";
+  const TARGET = "PASSWORD:";
+  const MORPH_MS = 650;
 
-  let last = "";
-  const tick = () => {
-    const text = formatTronTime(new Date());
-    if (text !== last) {
-      element.textContent = text;
-      last = text;
+  let mode = "clock";
+  let morphStart = 0;
+  let cursor = null;
+
+  const setText = (text) => {
+    element.textContent = text;
+    if (cursor) element.appendChild(cursor);
+  };
+
+  const renderClock = () => setText(formatTronTime(new Date()));
+
+  const renderMorph = (now) => {
+    const t = Math.min(1, (now - morphStart) / MORPH_MS);
+    const settled = Math.floor(t * TARGET.length);
+    let out = "";
+    for (let i = 0; i < TARGET.length; i++) {
+      if (i < settled) out += TARGET[i];
+      else out += SCRAMBLE[Math.floor(Math.random() * SCRAMBLE.length)];
     }
+    setText(out);
+    if (t >= 1) {
+      mode = "password";
+      cursor = document.createElement("span");
+      cursor.className = "cursor";
+      setText(TARGET);
+    }
+  };
+
+  const tick = (now) => {
+    if (mode === "clock") renderClock();
+    else if (mode === "morphing") renderMorph(now);
     requestAnimationFrame(tick);
   };
   requestAnimationFrame(tick);
+
+  return {
+    showPassword() {
+      if (mode !== "clock") return;
+      mode = "morphing";
+      morphStart = performance.now();
+      element.classList.add("password");
+    },
+    showClock() {
+      mode = "clock";
+      cursor = null;
+      element.classList.remove("password");
+      renderClock();
+    },
+    get mode() {
+      return mode;
+    },
+  };
 }
 
 if (typeof document !== "undefined") {
-  startClock();
+  const element = document.querySelector(".timestamp");
+  if (element) {
+    window.tron = createTron(element);
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") window.tron.showClock();
+      else if (!e.metaKey && !e.ctrlKey && !e.altKey) window.tron.showPassword();
+    });
+  }
 }
 
 if (typeof module !== "undefined") {

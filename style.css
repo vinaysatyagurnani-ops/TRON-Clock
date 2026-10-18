@@ -1,3 +1,9 @@
+@font-face {
+  font-family: "Michroma";
+  src: local("Michroma"), url("fonts/Michroma-Regular.ttf") format("truetype");
+  font-display: swap;
+}
+
 :root {
   --bg: #000;
   /* ENCOM screen light: near-white core, blue-white bloom, as on the boardroom table. */
@@ -38,4 +44,28 @@ body {
     0 0 8px var(--tron-glow),
     0 0 22px var(--tron-glow),
     0 0 60px var(--tron-haze);
+}
+
+/* PASSWORD: state, shown while macOS brings up its own login panel over the saver. */
+.timestamp.password {
+  letter-spacing: 0.12em;
+}
+
+.cursor {
+  display: inline-block;
+  width: 0.55em;
+  height: 0.95em;
+  margin-left: 0.25em;
+  vertical-align: -0.08em;
+  background: var(--tron);
+  box-shadow: 0 0 8px var(--tron-glow), 0 0 22px var(--tron-glow);
+  animation: blink 1.1s steps(1) infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cursor { animation: none; }
 }

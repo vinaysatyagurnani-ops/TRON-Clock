@@ -6,12 +6,13 @@ cd "$(dirname "$0")"
 
 APP="Tron Clock.app"
 rm -rf "$APP"
-mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Resources/web"
+mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Resources/web/fonts"
 
 swiftc -O -o "$APP/Contents/MacOS/TronClock" macos/TronClock.swift \
   -framework Cocoa -framework WebKit
 
 cp index.html style.css script.js "$APP/Contents/Resources/web/"
+cp fonts/Michroma-Regular.ttf "$APP/Contents/Resources/web/fonts/"
 cp macos/Info.plist "$APP/Contents/Info.plist"
 
 # Ad-hoc signature so Gatekeeper lets a locally built app launch.
