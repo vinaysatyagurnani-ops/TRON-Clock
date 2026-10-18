@@ -1,0 +1,39 @@
+:root {
+  --tron: #9fffff;
+  --tron-glow: rgba(159, 255, 255, 0.55);
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  background: #000;
+  overflow: hidden;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--tron);
+  font-family: "Share Tech Mono", "OCR A Std", "Courier New", Courier,
+    "Lucida Sans Typewriter", "Lucida Typewriter", monospace;
+  cursor: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.timestamp {
+  /* Scales with window width so it fills a fullscreen MacBook display or a small window. */
+  font-size: clamp(1.25rem, 6.5vw, 12rem);
+  font-weight: normal;
+  letter-spacing: 0.05em;
+  text-align: center;
+  white-space: nowrap;
+  padding: 1rem 2rem;
+  font-variant-numeric: tabular-nums;
+  text-shadow:
+    0 0 6px var(--tron-glow),
+    0 0 18px var(--tron-glow),
+    0 0 40px rgba(159, 255, 255, 0.25);
+}
